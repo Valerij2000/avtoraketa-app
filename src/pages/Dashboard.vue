@@ -1,5 +1,6 @@
 <template>
   <SectionWrapper>
+    <Breadcrumbs :items="breadcrumbs" />
     <n-h2>Agent Dashboard</n-h2>
 
     <n-space vertical size="large">
@@ -12,4 +13,7 @@
 
 <script setup>
 import SectionWrapper from "../components/common/SectionWrapper.vue";
+import Breadcrumbs from "../components/common/Breadcrumbs.vue";
+
+const breadcrumbs = [{ label: "Home", to: "/" }, { label: "Dashboard" }];
 </script>

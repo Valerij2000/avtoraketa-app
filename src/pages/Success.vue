@@ -5,14 +5,20 @@
 
       <n-text depth="3"> We’ll contact you within 10 minutes </n-text>
 
-      <n-button
-        type="primary"
-        tag="a"
-        href="https://t.me/Pashkovskiyavto"
-        target="_blank"
-      >
-        Go to Telegram
-      </n-button>
+      <n-space>
+        <n-button
+          type="primary"
+          tag="a"
+          href="https://t.me/Pashkovskiyavto"
+          target="_blank"
+        >
+          Go to Telegram
+        </n-button>
+
+        <router-link to="/">
+          <n-button type="primary"> Go to Home Page </n-button>
+        </router-link>
+      </n-space>
     </n-space>
   </SectionWrapper>
 </template>

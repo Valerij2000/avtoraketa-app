@@ -1,5 +1,6 @@
 <template>
   <SectionWrapper>
+    <Breadcrumbs :items="breadcrumbs" />
     <n-h2>Join Autoraketa</n-h2>
 
     <n-form :model="form" :rules="rules" ref="formRef">
@@ -22,9 +23,12 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import SectionWrapper from "../components/common/SectionWrapper.vue";
+import Breadcrumbs from "../components/common/Breadcrumbs.vue";
 import { sendApplication } from "../services/api";
 
 const router = useRouter();
+
+const breadcrumbs = [{ label: "Home", to: "/" }, { label: "Apply" }];
 
 const formRef = ref(null);
 const loading = ref(false);

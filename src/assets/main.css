@@ -1,0 +1,13 @@
+@import './base.css';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2vmin;
+  font-weight: normal;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+}

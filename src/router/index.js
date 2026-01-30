@@ -3,6 +3,12 @@ import {
   createWebHistory
 } from 'vue-router'
 import HomeView from '../pages/Home.vue'
+// import { getAuth } from 'firebase/auth'
+
+// router.beforeEach((to) => {
+//   const user = getAuth().currentUser
+//   if (to.meta.requiresAuth && !user) return '/login'
+// })
 
 const router = createRouter({
   history: createWebHistory(

@@ -16,6 +16,7 @@
         Submit
       </n-button>
     </n-form>
+    <TelegramLogin></TelegramLogin>
   </SectionWrapper>
 </template>
 
@@ -25,6 +26,7 @@ import { useRouter } from "vue-router";
 import SectionWrapper from "../components/common/SectionWrapper.vue";
 import Breadcrumbs from "../components/common/Breadcrumbs.vue";
 import { sendApplication } from "../services/api";
+import TelegramLogin from "../components/common/TelegramLogin.vue";
 
 const router = useRouter();
 

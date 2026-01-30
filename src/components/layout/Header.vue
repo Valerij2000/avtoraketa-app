@@ -1,19 +1,28 @@
 <template>
   <n-space justify="space-between" align="center" class="header">
     <div class="logo">
-      <n-h3>Autoraketa</n-h3>
+      <n-image class="nav-image" :src="LogoImg" preview-disabled />
     </div>
     <n-space>
-      <n-button type="tertiary" @click="scrollTo('home')">Home</n-button>
-      <n-button type="tertiary" @click="scrollTo('why-us')">Why Us</n-button>
-      <n-button type="tertiary" @click="scrollTo('calc')">Calc</n-button>
-      <n-button type="primary" @click="goToApply">Join</n-button>
+      <n-button class="nav-btn" type="tertiary" @click="scrollTo('home')"
+        >Home</n-button
+      >
+      <n-button class="nav-btn" type="tertiary" @click="scrollTo('why-us')"
+        >Why Us</n-button
+      >
+      <n-button class="nav-btn" type="tertiary" @click="scrollTo('calc')"
+        >Calc</n-button
+      >
+      <n-button class="nav-btn" type="primary" @click="goToApply"
+        >Join</n-button
+      >
     </n-space>
   </n-space>
 </template>
 
 <script setup>
 import { useRouter } from "vue-router";
+import LogoImg from "../../assets/logo.svg";
 
 const router = useRouter();
 
@@ -39,5 +48,23 @@ function scrollTo(id) {
 }
 .logo {
   font-weight: bold;
+}
+
+.nav-image {
+  width: 100px;
+  height: auto;
+}
+@media (max-width: 768px) {
+  .header {
+    gap: 0;
+    padding: 3vmin 4vmin;
+  }
+  .nav-image {
+    width: 60px;
+  }
+  .nav-btn {
+    font-size: 12px;
+    padding: 12px 11px;
+  }
 }
 </style>

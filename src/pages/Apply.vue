@@ -23,15 +23,22 @@
         :loading="loading"
         @click="submit"
         class="form-button"
+        :disabled="isCooldownActive"
       >
         Submit
       </n-button>
+      <n-text v-if="isCooldownActive" depth="3" style="margin-top: 8px">
+        You can submit a new application in a few hours.
+      </n-text>
     </n-form>
   </SectionWrapper>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+const SUBMIT_COOLDOWN_MS = 3 * 60 * 60 * 1000; // 3 hours
+const LAST_SUBMIT_KEY = "avtoraketa_last_submit";
+
+import { ref, reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useMessage } from "naive-ui";
 import SectionWrapper from "../components/common/SectionWrapper.vue";
@@ -50,6 +57,22 @@ const form = reactive({
   name: "",
   contact: "",
 });
+
+const isCooldownActive = computed(() => {
+  const lastSubmit = localStorage.getItem(LAST_SUBMIT_KEY);
+  if (!lastSubmit) return false;
+
+  return Date.now() - Number(lastSubmit) < SUBMIT_COOLDOWN_MS;
+});
+
+function canSubmitForm() {
+  const lastSubmit = localStorage.getItem(LAST_SUBMIT_KEY);
+
+  if (!lastSubmit) return true;
+
+  const elapsed = Date.now() - Number(lastSubmit);
+  return elapsed >= SUBMIT_COOLDOWN_MS;
+}
 
 function formatContact(value) {
   if (!value) return;
@@ -94,7 +117,19 @@ const rules = {
 };
 
 async function submit() {
-  if (!formRef.value) return;
+  if (!canSubmitForm()) {
+    const remainingMs =
+      SUBMIT_COOLDOWN_MS -
+      (Date.now() - Number(localStorage.getItem(LAST_SUBMIT_KEY)));
+
+    const remainingMinutes = Math.ceil(remainingMs / 60000);
+
+    message.error(
+      `You’ve already sent an application.\nPlease try again in ${remainingMinutes} minutes.`,
+    );
+
+    return;
+  }
 
   try {
     loading.value = true;
@@ -102,7 +137,13 @@ async function submit() {
     await formRef.value.validate();
     const leadId = await sendLeadToTelegram(form);
 
-    router.push("/success");
+    // Save timestamp AFTER successful submit
+    localStorage.setItem(LAST_SUBMIT_KEY, Date.now().toString());
+
+    router.push({
+      name: "Success",
+      state: { leadId },
+    });
 
     form.name = "";
     form.contact = "";

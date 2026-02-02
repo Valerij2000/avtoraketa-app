@@ -3,7 +3,12 @@
     <div class="logo">
       <n-image class="nav-image" :src="LogoImg" preview-disabled />
     </div>
-    <n-space>
+    <n-space align="center">
+      <!-- Display Lead ID if exists -->
+      <n-text v-if="leadId" depth="2" style="margin-right: 16px">
+        Lead ID: <b>{{ leadId }}</b>
+      </n-text>
+
       <n-button class="nav-btn" type="tertiary" @click="scrollTo('home')"
         >Home</n-button
       >
@@ -21,16 +26,21 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import LogoImg from "../../assets/logo.svg";
 
 const router = useRouter();
+const leadId = ref("");
+
+onMounted(() => {
+  leadId.value = localStorage.getItem("avtoraketaLeadId") || "";
+});
 
 function goToApply() {
   router.push("/apply");
 }
 
-// optional smooth scroll to sections
 function scrollTo(id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: "smooth" });

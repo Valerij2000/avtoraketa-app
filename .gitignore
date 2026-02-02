@@ -32,6 +32,9 @@ coverage
 /cypress/videos/
 /cypress/screenshots/
 
+#Secrets
+.env
+
 # Vitest
 __screenshots__/
 

@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useAuth } from "@/composables/useAuth";
 import { useUser } from "@/composables/useUser";
-import { sendToTelegram } from "@/api/telegram";
+import { sendToTelegram } from "@/services/telegram";
 
 const form = ref({
   name: "",

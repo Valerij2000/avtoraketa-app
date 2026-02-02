@@ -3,16 +3,27 @@
     <Breadcrumbs :items="breadcrumbs" />
     <n-h2>Join Autoraketa</n-h2>
 
-    <n-form :model="form" :rules="rules" ref="formRef">
+    <n-form :model="form" :rules="rules" ref="formRef" class="form-apply">
       <n-form-item label="Name and Surname" path="name">
         <n-input v-model:value="form.name" />
       </n-form-item>
 
       <n-form-item label="Phone or Telegram" path="contact">
-        <n-input v-model:value="form.contact" />
+        <n-input v-model:value="form.contact" @input="formatContact" />
+
+        <template #feedback>
+          <small
+            >Phone will prepend +7 automatically, Telegram will prepend @</small
+          >
+        </template>
       </n-form-item>
 
-      <n-button type="primary" :loading="loading" @click="submit">
+      <n-button
+        type="primary"
+        :loading="loading"
+        @click="submit"
+        class="form-button"
+      >
         Submit
       </n-button>
     </n-form>
@@ -40,6 +51,31 @@ const form = reactive({
   contact: "",
 });
 
+function formatContact(value) {
+  if (!value) return;
+
+  // Remove spaces
+  value = value.replace(/\s+/g, "");
+
+  // If numeric only, phone number
+  if (/^\d+$/.test(value) && !value.startsWith("+7")) {
+    value = "+7" + value;
+  }
+
+  // If starts with +7 and more than 10 digits after +7
+  if (value.startsWith("+7")) {
+    const digits = value.slice(2, 12); // only take first 10 digits
+    value = "+7" + digits;
+  }
+
+  // If letters/numbers without @, prepend @
+  if (/^[a-zA-Z_]\w*$/.test(value) && !value.startsWith("@")) {
+    value = "@" + value;
+  }
+
+  form.contact = value;
+}
+
 const rules = {
   name: [
     {
@@ -51,16 +87,8 @@ const rules = {
   contact: [
     {
       required: true,
-      message:
-        "Enter a valid phone number starts with 7 or Telegram username with @",
+      message: "Enter a valid phone number (+7...) or Telegram username (@...)",
       trigger: ["blur", "input"],
-    },
-    {
-      validator(_, value) {
-        const phoneRegex = /^\+?\d{10,15}$/;
-        const telegramRegex = /^@[\w\d_]{4,}$/;
-        return phoneRegex.test(value) || telegramRegex.test(value);
-      },
     },
   ],
 };
@@ -86,3 +114,15 @@ async function submit() {
   }
 }
 </script>
+
+<style scoped>
+.form-apply {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-button {
+  display: flex;
+  margin-top: 3vmin;
+}
+</style>

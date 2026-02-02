@@ -9,33 +9,59 @@
         Lead ID: <b>{{ leadId }}</b>
       </n-text>
 
-      <n-button class="nav-btn" type="tertiary" @click="scrollTo('home')"
-        >Home</n-button
-      >
-      <n-button class="nav-btn" type="tertiary" @click="scrollTo('why-us')"
-        >Why Us</n-button
-      >
-      <n-button class="nav-btn" type="tertiary" @click="scrollTo('calc')"
-        >Calc</n-button
-      >
-      <n-button class="nav-btn" type="primary" @click="goToApply"
-        >Join</n-button
-      >
+      <n-button class="nav-btn" type="tertiary" @click="scrollTo('home')">{{
+        t("header.home")
+      }}</n-button>
+      <n-button class="nav-btn" type="tertiary" @click="scrollTo('why-us')">{{
+        t("header.whyUs")
+      }}</n-button>
+      <n-button class="nav-btn" type="tertiary" @click="scrollTo('calc')">{{
+        t("header.calc")
+      }}</n-button>
+      <n-button class="nav-btn" type="primary" @click="goToApply">{{
+        t("header.join")
+      }}</n-button>
     </n-space>
+  </n-space>
+  <n-space>
+    <n-button
+      size="small"
+      tertiary
+      :type="locale === 'ru' ? 'primary' : 'default'"
+      @click="switchLang('ru')"
+    >
+      RU
+    </n-button>
+
+    <n-button
+      size="small"
+      tertiary
+      :type="locale === 'en' ? 'primary' : 'default'"
+      @click="switchLang('en')"
+    >
+      EN
+    </n-button>
   </n-space>
 </template>
 
 <script setup>
+import { useI18n } from "vue-i18n";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import LogoImg from "../../assets/logo.svg";
 
 const router = useRouter();
 const leadId = ref("");
+const { locale, t } = useI18n();
 
 onMounted(() => {
   leadId.value = localStorage.getItem("avtoraketaLeadId") || "";
 });
+
+function switchLang(lang) {
+  locale.value = lang;
+  localStorage.setItem("lang", lang);
+}
 
 function goToApply() {
   router.push("/apply");

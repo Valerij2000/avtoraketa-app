@@ -1,20 +1,23 @@
 <template>
   <SectionWrapper>
     <n-space vertical size="large">
-      <n-h1> Earn from 30,000₽ per deal Become an Autoraketa agent </n-h1>
+      <n-h1> {{ t("hero.title") }} </n-h1>
 
       <n-text depth="3">
-        Ozon for cars — we handle the hard work, you earn.
+        {{ t("hero.subtitle") }}
       </n-text>
 
-      <ButtonApply :text="buttonApplyText"></ButtonApply>
+      <ButtonApply :text="t('hero.button')"></ButtonApply>
     </n-space>
   </SectionWrapper>
 </template>
 
 <script setup>
+import { useI18n } from "vue-i18n";
 import SectionWrapper from "../common/SectionWrapper.vue";
 import ButtonApply from "../common/ButtonApply.vue";
+
+const { t } = useI18n();
 
 const buttonApplyText = "Join the team";
 </script>

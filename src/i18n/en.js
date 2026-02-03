@@ -101,4 +101,14 @@ export default {
       error: "Submission failed. Please try again.",
     },
   },
+   success: {
+    title: "Application sent 🎉",
+    subtitle: "We’ll contact you within 10 minutes",
+    leadId: "Your Lead ID:",
+    copyButton: "Copy ID",
+    copySuccess: "Lead ID copied to clipboard",
+    copyError: "Failed to copy Lead ID",
+    telegramButton: "Go to Telegram",
+    homeButton: "Go to Home Page",
+  },
 };

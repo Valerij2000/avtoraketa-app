@@ -1,17 +1,17 @@
 <template>
   <SectionWrapper>
     <n-space vertical align="center" size="large">
-      <n-h2>Application sent 🎉</n-h2>
+      <n-h2>{{ t("success.title") }}</n-h2>
 
-      <n-text depth="3"> We’ll contact you within 10 minutes </n-text>
+      <n-text depth="3"> {{ t("success.subtitle") }} </n-text>
 
       <n-space align="center" size="small">
         <n-text v-if="leadId" depth="2">
-          Your Lead ID: <b>{{ leadId }}</b>
+          {{ t("success.leadId") }} <b>{{ leadId }}</b>
         </n-text>
 
         <n-button v-if="leadId" size="small" type="default" @click="copyLeadId">
-          Copy ID
+          {{ t("success.copyButton") }}
         </n-button>
       </n-space>
 
@@ -22,11 +22,11 @@
           href="https://t.me/Pashkovskiyavto"
           target="_blank"
         >
-          Go to Telegram
+          {{ t("success.telegramButton") }}
         </n-button>
 
         <router-link to="/">
-          <n-button type="primary"> Go to Home Page </n-button>
+          <n-button type="primary"> {{ t("success.homeButton") }} </n-button>
         </router-link>
       </n-space>
     </n-space>
@@ -37,12 +37,14 @@
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import { useMessage } from "naive-ui";
+import { useI18n } from "vue-i18n";
 import SectionWrapper from "../components/common/SectionWrapper.vue";
 import { onBeforeRouteLeave } from "vue-router";
 
 const router = useRouter();
 const leadId = ref(history.state?.leadId || "");
 const message = useMessage();
+const { t } = useI18n();
 
 // Save leadID to localStorage for persistent access
 onMounted(() => {
@@ -58,10 +60,10 @@ function copyLeadId() {
     navigator.clipboard
       .writeText(leadId.value)
       .then(() => {
-        message.success("Lead ID copied to clipboard");
+        message.success(t("success.copySuccess"));
       })
       .catch(() => {
-        message.success("Failed to copy Lead ID");
+        message.success(t("success.copyError"));
       });
   } else {
     // fallback
@@ -71,7 +73,7 @@ function copyLeadId() {
     el.select();
     document.execCommand("copy");
     document.body.removeChild(el);
-    message.success("Lead ID copied to clipboard");
+    message.success(t("success.copySuccess"));
   }
 }
 </script>

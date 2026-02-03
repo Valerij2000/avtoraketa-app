@@ -1,7 +1,7 @@
 <template>
   <SectionWrapper>
     <Breadcrumbs :items="breadcrumbs" />
-    <n-h2>Join Autoraketa</n-h2>
+    <n-h2>Join Avtoraketa</n-h2>
 
     <n-form :model="form" :rules="rules" ref="formRef" class="form-apply">
       <n-form-item label="Name and Surname" path="name">

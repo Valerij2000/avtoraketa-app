@@ -1,30 +1,19 @@
 <template>
   <SectionWrapper>
     <n-space vertical size="large">
-      <n-h2>Why work with Autoraketa?</n-h2>
+      <n-h2>{{ t("why.title") }}</n-h2>
       <n-text depth="3">
-        From the first day, you can start earning without risk or investment.
+        {{ t("why.subtitle") }}
       </n-text>
 
       <n-space justify="space-between" wrap>
-        <n-card title="No investments" bordered>
-          You don’t buy cars or risk your money. Just bring your energy and
-          motivation.
-        </n-card>
-
-        <n-card title="Remote work" bordered>
-          Work from home, university, store, or even vacation. Just a phone and
-          internet needed.
-        </n-card>
-
-        <n-card title="We handle everything" bordered>
-          We take care of searching, negotiating, logistics, and paperwork. You
-          just receive your reward.
-        </n-card>
-
-        <n-card title="High earnings" bordered>
-          Start with 30,000 ₽ per deal and earn more as you become an active
-          agent.
+        <n-card
+          v-for="item in cards"
+          :key="item.key"
+          :title="item.title"
+          bordered
+        >
+          {{ item.text }}
         </n-card>
       </n-space>
     </n-space>
@@ -32,7 +21,34 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import SectionWrapper from "../common/SectionWrapper.vue";
+
+const { t } = useI18n();
+
+const cards = computed(() => [
+  {
+    key: "noInvestments",
+    title: t("why.cards.noInvestments.title"),
+    text: t("why.cards.noInvestments.text"),
+  },
+  {
+    key: "remote",
+    title: t("why.cards.remote.title"),
+    text: t("why.cards.remote.text"),
+  },
+  {
+    key: "fullSupport",
+    title: t("why.cards.fullSupport.title"),
+    text: t("why.cards.fullSupport.text"),
+  },
+  {
+    key: "earnings",
+    title: t("why.cards.earnings.title"),
+    text: t("why.cards.earnings.text"),
+  },
+]);
 </script>
 
 <style scoped>

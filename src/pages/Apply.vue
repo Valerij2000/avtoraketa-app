@@ -1,20 +1,30 @@
 <template>
   <SectionWrapper>
     <Breadcrumbs :items="breadcrumbs" />
-    <n-h2>Join Avtoraketa</n-h2>
+    <n-h2>{{ t("apply.title") }}</n-h2>
 
     <n-form :model="form" :rules="rules" ref="formRef" class="form-apply">
-      <n-form-item label="Name and Surname" path="name">
-        <n-input v-model:value="form.name" />
+      <n-form-item :label="t('apply.form.name.label')" path="name">
+        <n-input
+          v-model:value="form.name"
+          :placeholder="t('apply.form.name.placeholder')"
+        />
       </n-form-item>
 
-      <n-form-item label="Phone or Telegram" path="contact">
-        <n-input v-model:value="form.contact" @input="formatContact" />
+      <n-form-item :label="t('apply.form.contact.label')" path="contact">
+        <n-input
+          v-model:value="form.contact"
+          @input="formatContact"
+          :placeholder="t('apply.form.contact.placeholder')"
+        />
 
         <template #feedback>
-          <small
-            >Phone will prepend +7 automatically, Telegram will prepend @</small
-          >
+          <small>{{
+            t("apply.form.contact.hint", {
+              plusSeven: "(+7...)",
+              atSign: "(@...)",
+            })
+          }}</small>
         </template>
       </n-form-item>
 
@@ -25,10 +35,10 @@
         class="form-button"
         :disabled="isCooldownActive"
       >
-        Submit
+        {{ t("apply.form.submit") }}
       </n-button>
       <n-text v-if="isCooldownActive" depth="3" style="margin-top: 8px">
-        You can submit a new application in a few hours.
+        {{ t("apply.form.cooldownHint") }}
       </n-text>
     </n-form>
   </SectionWrapper>
@@ -41,6 +51,7 @@ const LAST_SUBMIT_KEY = "avtoraketa_last_submit";
 import { ref, reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useMessage } from "naive-ui";
+import { useI18n } from "vue-i18n";
 import SectionWrapper from "../components/common/SectionWrapper.vue";
 import Breadcrumbs from "../components/common/Breadcrumbs.vue";
 import { sendLeadToTelegram } from "../services/telegram";
@@ -48,7 +59,12 @@ import { sendLeadToTelegram } from "../services/telegram";
 const router = useRouter();
 const message = useMessage();
 
-const breadcrumbs = [{ label: "Home", to: "/" }, { label: "Apply" }];
+const { t } = useI18n();
+
+const breadcrumbs = [
+  { label: t("apply.breadcrumbs.home"), to: "/" },
+  { label: t("apply.breadcrumbs.apply") },
+];
 
 const formRef = ref(null);
 const loading = ref(false);
@@ -103,14 +119,14 @@ const rules = {
   name: [
     {
       required: true,
-      message: "Please enter your name",
+      message: t("apply.form.name.required"),
       trigger: ["blur", "input"],
     },
   ],
   contact: [
     {
       required: true,
-      message: "Enter a valid phone number (+7...) or Telegram username (@...)",
+      message: t("apply.form.contact.required"),
       trigger: ["blur", "input"],
     },
   ],
@@ -124,9 +140,7 @@ async function submit() {
 
     const remainingMinutes = Math.ceil(remainingMs / 60000);
 
-    message.error(
-      `You’ve already sent an application.\nPlease try again in ${remainingMinutes} minutes.`,
-    );
+    message.error(t("apply.messages.cooldown", { minutes }));
 
     return;
   }
@@ -149,7 +163,7 @@ async function submit() {
     form.contact = "";
   } catch (error) {
     console.error(error);
-    message.error("Submission failed. Please try again.");
+    message.error(t("apply.messages.error"));
   } finally {
     loading.value = false;
   }

@@ -6,7 +6,7 @@
     <n-space align="center">
       <!-- Display Lead ID if exists -->
       <n-text v-if="leadId" depth="2" style="margin-right: 16px">
-        Lead ID: <b>{{ leadId }}</b>
+        {{ t("header.leadID") }}: <b>{{ leadId }}</b>
       </n-text>
 
       <n-button class="nav-btn" type="tertiary" @click="scrollTo('home')">{{

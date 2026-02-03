@@ -4,6 +4,7 @@ export default {
     whyUs: "Why Us",
     calc: "Calc",
     join: "Join",
+    leadID: "Your Lead ID"
   },
   hero: {
     title: "Earn from 30,000₽ per deal — Become an Avtoraketa agent",
@@ -71,5 +72,33 @@ export default {
     subtitle: "Leave your contact and we’ll explain everything ",
     subtitleStrong: "in 10 minutes",
     button: "Join the team",
+  },
+  apply: {
+    title: "Join Avtoraketa",
+    breadcrumbs: {
+      home: "Home",
+      apply: "Apply",
+    },
+    form: {
+      name: {
+        label: "Name and Surname",
+        required: "Please enter your name",
+        placeholder: "Enter your full name"
+      },
+      contact: {
+        label: "Phone or Telegram",
+        hint: "Phone will prepend {plusSeven} automatically, Telegram will prepend {atSign}",
+        required:
+          "Enter a valid phone number {plusSeven} or Telegram username {atSign}",
+        placeholder: "Your phone or Telegram username"
+      },
+      submit: "Submit",
+      cooldownHint: "You can submit a new application in a few hours.",
+    },
+    messages: {
+      cooldown:
+        "You’ve already sent an application.\nPlease try again in {minutes} minutes.",
+      error: "Submission failed. Please try again.",
+    },
   },
 };

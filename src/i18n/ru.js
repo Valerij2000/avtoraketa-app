@@ -4,6 +4,7 @@ export default {
     whyUs: "Почему мы",
     calc: "Кальк",
     join: "Присоединиться",
+    leadID: "Ваше Lead ID"
   },
   hero: {
     title: "Зарабатывайте от 30,000₽ с каждой сделки — станьте агентом Avtoraketa",
@@ -72,5 +73,35 @@ export default {
     subtitle: "Оставьте контакт — мы всё объясним",
     subtitleStrong: "за 10 минут",
     button: "Присоединиться к команде",
+  },
+  apply: {
+    title: "Присоединиться к Avtoraketa",
+    breadcrumbs: {
+      home: "Главная",
+      apply: "Заявка",
+    },
+    form: {
+      name: {
+        label: "Имя и фамилия",
+        required: "Пожалуйста, введите имя",
+        placeholder: "Введите ваше имя и фамилию"
+      },
+      contact: {
+        label: "Телефон или Telegram",
+        hint:
+          "Телефон будет автоматически с {plusSeven}, Telegram — с символом {atSign}",
+        required:
+          "Введите номер телефона {plusSeven} или Telegram {atSign}",
+        placeholder: "Ваш телефон или Telegram"
+      },
+      submit: "Отправить",
+      cooldownHint:
+        "Вы сможете отправить новую заявку через несколько часов.",
+    },
+    messages: {
+      cooldown:
+        "Вы уже отправили заявку.\nПовторите попытку через {minutes} мин.",
+      error: "Не удалось отправить заявку. Попробуйте позже.",
+    },
   },
 };

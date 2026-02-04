@@ -3,7 +3,7 @@ export default {
     home: "Главная",
     whyUs: "Почему мы",
     calc: "Кальк",
-    join: "Присоединиться",
+    join: "Заявка",
     leadID: "Ваше Lead ID"
   },
   hero: {

@@ -1,6 +1,6 @@
 export default {
   header: {
-    home: "Home",
+    home: "Web-site",
     whyUs: "Why Us",
     calc: "Calc",
     join: "Join",

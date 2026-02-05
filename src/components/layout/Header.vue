@@ -8,8 +8,7 @@
       <n-text v-if="leadId" depth="2" style="margin-right: 16px">
         {{ t("header.leadID") }}: <b>{{ leadId }}</b>
       </n-text>
-
-      <n-button class="nav-btn" type="tertiary" @click="scrollTo('home')">{{
+      <n-button class="nav-btn" type="tertiary" @click="goWebSite()">{{
         t("header.home")
       }}</n-button>
       <n-button class="nav-btn" type="tertiary" @click="scrollTo('why-us')">{{
@@ -57,6 +56,10 @@ const { locale, t } = useI18n();
 onMounted(() => {
   leadId.value = localStorage.getItem("avtoraketaLeadId") || "";
 });
+
+function goWebSite() {
+  window.location.href = "/";
+}
 
 function switchLang(lang) {
   locale.value = lang;

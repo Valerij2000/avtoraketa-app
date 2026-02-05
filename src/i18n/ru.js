@@ -1,6 +1,6 @@
 export default {
   header: {
-    home: "Главная",
+    home: "На сайт",
     whyUs: "Почему мы",
     calc: "Кальк",
     join: "Заявка",

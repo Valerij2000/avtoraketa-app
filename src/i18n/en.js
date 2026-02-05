@@ -8,7 +8,7 @@ export default {
   },
   hero: {
     title: "Earn from 30,000₽ per deal — Become an Avtoraketa agent",
-    subtitle: "Ozon for cars — we handle the hard work, you earn.",
+    subtitle: "Like Ozon for cars — we handle the hard work, you earn.",
     button: "Join the team",
   },
   why: {

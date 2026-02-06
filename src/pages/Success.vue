@@ -45,11 +45,22 @@ import { useI18n } from "vue-i18n";
 import SectionWrapper from "../components/common/SectionWrapper.vue";
 import { onBeforeRouteLeave } from "vue-router";
 import { useLeadStore } from "@/stores/lead";
+import { useHead } from "@vueuse/head";
 
 const leadStore = useLeadStore();
 const router = useRouter();
 const message = useMessage();
 const { t } = useI18n();
+
+useHead({
+  title: t("seo.success.title"),
+  meta: [
+    {
+      name: "description",
+      content: t("seo.success.description"),
+    },
+  ],
+});
 
 function copyLeadId() {
   if (!leadStore.leadId) return;

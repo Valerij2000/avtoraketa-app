@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 
 const LAST_SUBMIT_KEY = "avtoraketa_last_submit";
 const LEAD_ID_KEY = "avtoraketaLeadId";
+const COOLDOWN_MS = 3 * 60 * 60 * 1000; // 3 hours
 
 export const useLeadStore = defineStore("lead", {
   state: () => ({
@@ -12,7 +13,7 @@ export const useLeadStore = defineStore("lead", {
   getters: {
     isCooldownActive: (state) => {
       if (!state.lastSubmit) return false;
-      return Date.now() - state.lastSubmit < 3 * 60 * 60 * 1000;
+      return Date.now() - state.lastSubmit < COOLDOWN_MS;
     },
   },
 

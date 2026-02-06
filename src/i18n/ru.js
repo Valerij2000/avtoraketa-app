@@ -114,4 +114,20 @@ export default {
     telegramButton: "Перейти в Telegram",
     homeButton: "На главную",
   },
+  seo: {
+    image: "https://avtoraketa.com/assets/logo.svg",
+    url: "https://avtoraketa.com/",
+    home: {
+      title: "Avtoraketa — Зарабатывайте на автомобилях легко",
+      description: "Как Ozon для автомобилей — работайте удаленно и зарабатывайте от 30 000₽ за сделку",
+    },
+    apply: {
+      title: "Avtoraketa — Подать заявку",
+      description: "Заполните форму и начните зарабатывать на сделках с автомобилями.",
+    },
+    success: {
+      title: "Avtoraketa — Заявка отправлена",
+      description: "Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.",
+    }
+  }
 };

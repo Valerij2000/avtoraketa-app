@@ -14,7 +14,7 @@
       <n-form-item :label="t('apply.form.contact.label')" path="contact">
         <n-input
           v-model:value="form.contact"
-          @input="formatContact"
+          @input="onContactInput"
           :placeholder="t('apply.form.contact.placeholder')"
         />
 
@@ -49,14 +49,16 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
-import { useRouter } from "vue-router";
+import { ref, reactive, computed, watch } from "vue";
+import { useRouter, onBeforeRouteUpdate } from "vue-router";
 import { useMessage } from "naive-ui";
 import { useI18n } from "vue-i18n";
 import SectionWrapper from "../components/common/SectionWrapper.vue";
 import Breadcrumbs from "../components/common/Breadcrumbs.vue";
 import { sendLeadToTelegram } from "../services/telegram";
+import { useContactFormatter } from "@/composables/useContactFormatter";
 import { useLeadStore } from "@/stores/lead";
+import { useHead } from "@vueuse/head";
 
 const leadStore = useLeadStore();
 const router = useRouter();
@@ -64,10 +66,22 @@ const message = useMessage();
 
 const { t } = useI18n();
 
+const { formatContact } = useContactFormatter();
+
 const breadcrumbs = [
   { label: t("apply.breadcrumbs.home"), to: "/" },
   { label: t("apply.breadcrumbs.apply") },
 ];
+
+useHead({
+  title: t("seo.apply.title"),
+  meta: [
+    {
+      name: "description",
+      content: t("seo.apply.description"),
+    },
+  ],
+});
 
 const formRef = ref(null);
 const loading = ref(false);
@@ -77,30 +91,15 @@ const form = reactive({
   contact: "",
 });
 
-function formatContact(value) {
-  if (!value) return;
-
-  // Remove spaces
-  value = value.replace(/\s+/g, "");
-
-  // If numeric only, phone number
-  if (/^\d+$/.test(value) && !value.startsWith("+7")) {
-    value = "+7" + value;
-  }
-
-  // If starts with +7 and more than 10 digits after +7
-  if (value.startsWith("+7")) {
-    const digits = value.slice(2, 12); // only take first 10 digits
-    value = "+7" + digits;
-  }
-
-  // If letters/numbers without @, prepend @
-  if (/^[a-zA-Z_]\w*$/.test(value) && !value.startsWith("@")) {
-    value = "@" + value;
-  }
-
-  form.contact = value;
-}
+watch(
+  () => form.contact,
+  (value) => {
+    const formatted = formatContact(value);
+    if (formatted !== value) {
+      form.contact = formatted;
+    }
+  },
+);
 
 const rules = {
   name: [

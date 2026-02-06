@@ -111,4 +111,20 @@ export default {
     telegramButton: "Go to Telegram",
     homeButton: "Go to Home Page",
   },
+  seo: {
+    image: "https://avtoraketa.com/assets/logo.svg",
+    url: "https://avtoraketa.com/",
+    home: {
+      title: "Avtoraketa — Earn from cars easily",
+      description: "Like Ozon for cars — work remotely and earn from 30,000₽ per deal.",
+    },
+    apply: {
+      title: "Avtoraketa — Apply",
+      description: "Fill the form and start earning from car deals.",
+    },
+    success: {
+      title: "Avtoraketa — Application Sent",
+      description: "Your application has been sent. We will contact you shortly.",
+    }
+  }
 };

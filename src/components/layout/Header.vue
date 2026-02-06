@@ -5,8 +5,8 @@
     </div>
     <n-space align="center">
       <!-- Display Lead ID if exists -->
-      <n-text v-if="leadId" depth="2" style="margin-right: 16px">
-        {{ t("header.leadID") }}: <b>{{ leadId }}</b>
+      <n-text v-if="leadStore.leadId" depth="2" style="margin-right: 16px">
+        {{ t("header.leadID") }}: <b>{{ leadStore.leadId }}</b>
       </n-text>
       <n-button class="nav-btn" type="tertiary" @click="goWebSite()">{{
         t("header.home")
@@ -45,25 +45,23 @@
 
 <script setup>
 import { useI18n } from "vue-i18n";
-import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import LogoImg from "../../assets/logo.svg";
+import { useAppStore } from "@/stores/app";
+import { useLeadStore } from "@/stores/lead";
 
+const appStore = useAppStore();
+const leadStore = useLeadStore();
 const router = useRouter();
-const leadId = ref("");
 const { locale, t } = useI18n();
-
-onMounted(() => {
-  leadId.value = localStorage.getItem("avtoraketaLeadId") || "";
-});
 
 function goWebSite() {
   window.location.href = "/";
 }
 
 function switchLang(lang) {
+  appStore.setLang(lang);
   locale.value = lang;
-  localStorage.setItem("lang", lang);
 }
 
 function goToApply() {

@@ -33,11 +33,15 @@
         :loading="loading"
         @click="submit"
         class="form-button"
-        :disabled="isCooldownActive"
+        :disabled="leadStore.isCooldownActive"
       >
         {{ t("apply.form.submit") }}
       </n-button>
-      <n-text v-if="isCooldownActive" depth="3" style="margin-top: 8px">
+      <n-text
+        v-if="leadStore.isCooldownActive"
+        depth="3"
+        style="margin-top: 8px"
+      >
         {{ t("apply.form.cooldownHint") }}
       </n-text>
     </n-form>
@@ -45,9 +49,6 @@
 </template>
 
 <script setup>
-const SUBMIT_COOLDOWN_MS = 3 * 60 * 60 * 1000; // 3 hours
-const LAST_SUBMIT_KEY = "avtoraketa_last_submit";
-
 import { ref, reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useMessage } from "naive-ui";
@@ -55,7 +56,9 @@ import { useI18n } from "vue-i18n";
 import SectionWrapper from "../components/common/SectionWrapper.vue";
 import Breadcrumbs from "../components/common/Breadcrumbs.vue";
 import { sendLeadToTelegram } from "../services/telegram";
+import { useLeadStore } from "@/stores/lead";
 
+const leadStore = useLeadStore();
 const router = useRouter();
 const message = useMessage();
 
@@ -73,22 +76,6 @@ const form = reactive({
   name: "",
   contact: "",
 });
-
-const isCooldownActive = computed(() => {
-  const lastSubmit = localStorage.getItem(LAST_SUBMIT_KEY);
-  if (!lastSubmit) return false;
-
-  return Date.now() - Number(lastSubmit) < SUBMIT_COOLDOWN_MS;
-});
-
-function canSubmitForm() {
-  const lastSubmit = localStorage.getItem(LAST_SUBMIT_KEY);
-
-  if (!lastSubmit) return true;
-
-  const elapsed = Date.now() - Number(lastSubmit);
-  return elapsed >= SUBMIT_COOLDOWN_MS;
-}
 
 function formatContact(value) {
   if (!value) return;
@@ -133,15 +120,8 @@ const rules = {
 };
 
 async function submit() {
-  if (!canSubmitForm()) {
-    const remainingMs =
-      SUBMIT_COOLDOWN_MS -
-      (Date.now() - Number(localStorage.getItem(LAST_SUBMIT_KEY)));
-
-    const remainingMinutes = Math.ceil(remainingMs / 60000);
-
-    message.error(t("apply.messages.cooldown", { minutes }));
-
+  if (leadStore.isCooldownActive) {
+    message.error(t("apply.form.cooldownHint"));
     return;
   }
 
@@ -152,11 +132,11 @@ async function submit() {
     const leadId = await sendLeadToTelegram(form);
 
     // Save timestamp AFTER successful submit
-    localStorage.setItem(LAST_SUBMIT_KEY, Date.now().toString());
+    leadStore.setLeadId(leadId);
+    leadStore.markSubmitted();
 
     router.push({
       name: "Success",
-      state: { leadId },
     });
 
     form.name = "";

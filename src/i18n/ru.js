@@ -4,7 +4,7 @@ export default {
     whyUs: "Почему мы",
     calc: "Кальк",
     join: "Заявка",
-    leadID: "Ваше Lead ID"
+    leadID: "Ваш Lead ID"
   },
   hero: {
     title: "Зарабатывайте от 30,000₽ с каждой сделки — станьте агентом Avtoraketa",

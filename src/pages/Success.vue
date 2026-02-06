@@ -6,11 +6,16 @@
       <n-text depth="3"> {{ t("success.subtitle") }} </n-text>
 
       <n-space align="center" size="small">
-        <n-text v-if="leadId" depth="2">
-          {{ t("success.leadId") }} <b>{{ leadId }}</b>
+        <n-text v-if="leadStore.leadId" depth="2">
+          {{ t("success.leadId") }} <b>{{ leadStore.leadId }}</b>
         </n-text>
 
-        <n-button v-if="leadId" size="small" type="default" @click="copyLeadId">
+        <n-button
+          v-if="leadStore.leadId"
+          size="small"
+          type="default"
+          @click="copyLeadId"
+        >
           {{ t("success.copyButton") }}
         </n-button>
       </n-space>
@@ -35,30 +40,23 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
 import { useMessage } from "naive-ui";
 import { useI18n } from "vue-i18n";
 import SectionWrapper from "../components/common/SectionWrapper.vue";
 import { onBeforeRouteLeave } from "vue-router";
+import { useLeadStore } from "@/stores/lead";
 
+const leadStore = useLeadStore();
 const router = useRouter();
-const leadId = ref(history.state?.leadId || "");
 const message = useMessage();
 const { t } = useI18n();
 
-// Save leadID to localStorage for persistent access
-onMounted(() => {
-  if (leadId.value) {
-    localStorage.setItem("avtoraketaLeadId", leadId.value);
-  }
-});
-
 function copyLeadId() {
-  if (!leadId.value) return;
+  if (!leadStore.leadId) return;
 
   if (navigator?.clipboard) {
     navigator.clipboard
-      .writeText(leadId.value)
+      .writeText(leadStore.leadId)
       .then(() => {
         message.success(t("success.copySuccess"));
       })
@@ -66,9 +64,8 @@ function copyLeadId() {
         message.success(t("success.copyError"));
       });
   } else {
-    // fallback
     const el = document.createElement("textarea");
-    el.value = leadId.value;
+    el.value = leadStore.leadId;
     document.body.appendChild(el);
     el.select();
     document.execCommand("copy");

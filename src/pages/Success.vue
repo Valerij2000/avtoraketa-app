@@ -30,6 +30,10 @@
           {{ t("success.telegramButton") }}
         </n-button>
 
+        <router-link to="/profile">
+          <n-button type="primary"> {{ t("success.toProfile") }} </n-button>
+        </router-link>
+
         <router-link to="/">
           <n-button type="primary"> {{ t("success.homeButton") }} </n-button>
         </router-link>

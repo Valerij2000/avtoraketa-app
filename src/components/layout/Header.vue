@@ -17,8 +17,15 @@
       <n-button class="nav-btn" type="tertiary" @click="scrollTo('calc')">{{
         t("header.calc")
       }}</n-button>
-      <n-button class="nav-btn" type="primary" @click="goToApply">{{
-        t("header.join")
+      <n-button
+        v-if="!leadStore.leadId"
+        class="nav-btn"
+        type="primary"
+        @click="goToApply"
+        >{{ t("header.join") }}</n-button
+      >
+      <n-button v-else class="nav-btn" type="primary" @click="goToProfile">{{
+        t("header.profile")
       }}</n-button>
     </n-space>
   </n-space>
@@ -55,17 +62,21 @@ const leadStore = useLeadStore();
 const router = useRouter();
 const { locale, t } = useI18n();
 
-function goWebSite() {
-  window.location.href = "/";
-}
-
 function switchLang(lang) {
   appStore.setLang(lang);
   locale.value = lang;
 }
 
+function goWebSite() {
+  window.location.href = "/";
+}
+
 function goToApply() {
   router.push("/apply");
+}
+
+function goToProfile() {
+  router.push("/profile");
 }
 
 function scrollTo(id) {

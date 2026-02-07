@@ -58,9 +58,11 @@ import Breadcrumbs from "../components/common/Breadcrumbs.vue";
 import { sendLeadToTelegram } from "../services/telegram";
 import { useContactFormatter } from "@/composables/useContactFormatter";
 import { useLeadStore } from "@/stores/lead";
+import { useProfileStore } from "@/stores/profile";
 import { useHead } from "@vueuse/head";
 
 const leadStore = useLeadStore();
+const profileStore = useProfileStore();
 const router = useRouter();
 const message = useMessage();
 
@@ -69,8 +71,8 @@ const { t } = useI18n();
 const { formatContact } = useContactFormatter();
 
 const breadcrumbs = [
-  { label: t("apply.breadcrumbs.home"), to: "/" },
-  { label: t("apply.breadcrumbs.apply") },
+  { label: t("breadcrumbs.home"), to: "/" },
+  { label: t("breadcrumbs.apply") },
 ];
 
 useHead({
@@ -130,9 +132,14 @@ async function submit() {
     await formRef.value.validate();
     const leadId = await sendLeadToTelegram(form);
 
-    // Save timestamp AFTER successful submit
     leadStore.setLeadId(leadId);
     leadStore.markSubmitted();
+
+    profileStore.save({
+      name: form.name,
+      contact: form.contact,
+      leadId,
+    });
 
     router.push({
       name: "Success",

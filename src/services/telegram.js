@@ -37,3 +37,20 @@ export async function sendLeadToTelegram({
 
   return leadId;
 }
+
+export async function sendProfileDeleted({ leadId }) {
+  const text = `
+❌ Профиль удалён
+LeadID: ${leadId || "—"}
+Время: ${new Date().toLocaleString()}
+`;
+
+  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text,
+    }),
+  });
+}

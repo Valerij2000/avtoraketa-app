@@ -27,5 +27,12 @@ export const useLeadStore = defineStore("lead", {
       this.lastSubmit = now;
       localStorage.setItem(LAST_SUBMIT_KEY, now.toString());
     },
+    clear() {
+      this.leadId = "";
+      this.lastSubmit = null;
+
+      localStorage.removeItem(LEAD_ID_KEY);
+      localStorage.removeItem(LAST_SUBMIT_KEY);
+    },
   },
 });

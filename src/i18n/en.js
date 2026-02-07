@@ -1,10 +1,16 @@
 export default {
+  breadcrumbs: {
+    home: "Home",
+    apply: "Apply",
+    profile: "Profile"
+  },
   header: {
     home: "Web-site",
     whyUs: "Why Us",
     calc: "Calc",
     join: "Join",
-    leadID: "Your Lead ID"
+    leadID: "Your Lead ID",
+    profile: "Profile"
   },
   hero: {
     title: "Earn from 30,000₽ per deal — Become an Avtoraketa agent",
@@ -75,10 +81,6 @@ export default {
   },
   apply: {
     title: "Join Avtoraketa",
-    breadcrumbs: {
-      home: "Home",
-      apply: "Apply",
-    },
     form: {
       name: {
         label: "Name and Surname",
@@ -110,6 +112,24 @@ export default {
     copyError: "Failed to copy Lead ID",
     telegramButton: "Go to Telegram",
     homeButton: "Go to Home Page",
+    toProfile: "Show Profile"
+  },
+  profile: {
+    title: "Your Profile Info",
+    empty: "Empty",
+    name: "Name",
+    contact: "Contact",
+    leadId: "Lead ID",
+    submittedAt: "Time request",
+    clear: "Clear Profile",
+    warning: {
+      title: "Delete profile?",
+      content: "All of this application data will be deleted permanently",
+      positiveText: "Delete",
+      negativeText: "Cancel",
+      messageSuccess: "Profile deleted",
+      messageError: "Error while deleting data",
+    },
   },
   seo: {
     image: "https://avtoraketa.com/assets/logo.svg",

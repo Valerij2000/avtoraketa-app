@@ -37,9 +37,9 @@ const router = createRouter({
       component: () => import('../pages/Success.vue')
     },
     {
-      path: '/dashboard',
-      name: 'Dashboard',
-      component: () => import('../pages/Dashboard.vue')
+      path: "/profile",
+      name: "Profile",
+      component: () => import("../pages/Profile.vue"),
     }
   ],
 })

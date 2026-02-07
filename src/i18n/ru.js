@@ -1,10 +1,16 @@
 export default {
+  breadcrumbs: {
+    home: "Главная",
+    apply: "Заявка",
+    profile: "Профиль"
+  },
   header: {
     home: "На сайт",
     whyUs: "Почему мы",
     calc: "Кальк",
     join: "Заявка",
-    leadID: "Ваш Lead ID"
+    leadID: "Ваш Lead ID",
+    profile: "Профиль"
   },
   hero: {
     title: "Зарабатывайте от 30,000₽ с каждой сделки — станьте агентом Avtoraketa",
@@ -75,11 +81,7 @@ export default {
     button: "Присоединиться к команде",
   },
   apply: {
-    title: "Присоединиться к Avtoraketa",
-    breadcrumbs: {
-      home: "Главная",
-      apply: "Заявка",
-    },
+    title: "Присоединиться к Avtoraketa",    
     form: {
       name: {
         label: "Имя и фамилия",
@@ -113,6 +115,24 @@ export default {
     copyError: "Не удалось скопировать Lead ID",
     telegramButton: "Перейти в Telegram",
     homeButton: "На главную",
+    toProfile: "Посмотреть профиль"
+  },
+  profile: {
+    title: "Ваша персональная информация",
+    empty: "Профиль пуст",
+    name: "Имя",
+    contact: "Контакт",
+    leadId: "Lead ID",
+    submittedAt: "Время заявки",
+    clear: "Очистить профиль",
+    warning: {
+      title: "Удалить профиль?",
+      content: "Все ваши данные будут удалены. Это действие нельзя отменить.",
+      positiveText: "Удалить",
+      negativeText: "Отмена",
+      messageSuccess: "Профиль удалён",
+      messageError: "Ошибка при удалении профиля",
+    },
   },
   seo: {
     image: "https://avtoraketa.com/assets/logo.svg",
